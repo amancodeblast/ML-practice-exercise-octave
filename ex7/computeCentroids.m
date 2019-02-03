@@ -25,13 +25,12 @@ centroids = zeros(K, n);
 %
 % Note: You can use a for-loop over the centroids to compute this.
 %
-
-
-
-
-
-
-
+for i=1:K
+ temp=idx==i;
+ nt=sum(temp);
+ temp1=repmat(temp,1,n);%repmat means (a,b,c)a=matrix replicated b,c=how many rows/columns reolicated to respectively 
+ centroids(i,:)=sum(X.*temp1)./nt;
+end;
 
 % =============================================================
 

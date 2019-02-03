@@ -20,11 +20,19 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-
-
-
-
-
+%k=0;%this is small k not K
+%value=0;
+%display(X);
+%display(centroids);
+m=size(X,1);
+for i = 1:m
+    distance_array = zeros(1,K);
+    for j = 1:K
+        distance_array(1,j) = sqrt(sum(power((X(i,:)-centroids(j,:)),2)));
+    end
+    [d, d_idx] = min(distance_array);
+    idx(i,1) = d_idx;
+end;
 
 
 % =============================================================
