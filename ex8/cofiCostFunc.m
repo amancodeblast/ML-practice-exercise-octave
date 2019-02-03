@@ -39,11 +39,27 @@ Theta_grad = zeros(size(Theta));
 %        Theta_grad - num_users x num_features matrix, containing the 
 %                     partial derivatives w.r.t. to each element of Theta
 %
+h=X*Theta';
+H=(h-Y).*R;
+J=(1/2)*sum(sum(H.^2))+(lambda/2)*(sum(sum(Theta.^2))+sum(sum(X.^2)));;
 
+%Gradient for the  X and theta
+for i=1:num_movies
+ idx=find(R(i,:)==1);
+ Theta_temp=Theta(idx,:);
+ Y_temp=Y(i,idx);
+ X_grad(i,:)=((X(i,:)*Theta_temp')-Y_temp)*Theta_temp+(lambda*X(i,:));
+end;
+for i=1:num_users
+ idx=find(R(:,i)==1);
+ X_temp=X(idx,:);
+ Y_temp=Y(idx,i);
+ Theta_grad(i,:)=((X_temp*Theta(i,:)')-Y_temp)'*X_temp+(lambda*Theta(i,:));
+end;
 
-
-
-
+%---------------------------------------------------------------------------
+%now finding the regularization term
+%Reg_cost=(lambda/2)*(sum(sum(Theta.^2))+sum(sum(X.^2)));
 
 
 
